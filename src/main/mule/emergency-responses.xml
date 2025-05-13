@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+	<sub-flow name="getEmergencyResponseById" doc:id="64a44308-9bd3-4b01-a926-fea07d623436" >
+		<db:query-single doc:name="emergency_response" doc:id="96404e41-2505-4537-9ef2-21674757dd9a" config-ref="seconds-save-lives-db-config">
+			<db:sql ><![CDATA[SELECT *
+FROM emergency_responses
+WHERE er_id = :id]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	id: vars.id
+}]]]></db:input-parameters>
+		</db:query-single>
+		<validation:is-not-null doc:name="payload" doc:id="c25696c7-d236-4a37-89f2-84618bef9063" value="#[payload.er_id]" message='#["no record with ID $(vars.id)"]'>
+			<error-mapping sourceType="VALIDATION:NULL" targetType="APP:NOT_FOUND" />
+		</validation:is-not-null>
+		<ee:transform doc:name="response" doc:id="f3896caa-a601-4e67-ac71-017e16ff41c8" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	notes: payload.notes,
+	dispatched: payload.dispatch_time as String,
+	transportStarted: payload.transport_start_time as String,
+	created: payload.created_at as String,
+	destination: {
+		id: payload.destination_facility_id
+	},
+	typeOfEmergency: payload.emergency_type,
+	transportArrived: payload.transport_arrival_time as String,
+	priority: payload.priority default "",
+	fleetCity: payload.city default "",
+	vehicle: {
+		id: payload.vehicle_id
+	},
+	arrived: payload.arrival_time as String,
+	patient: {
+		id: payload.patient_id
+	},
+	reported: payload.reported_time as String,
+	location: {
+		address: payload.location_address,
+		latitude: payload.latitude,
+		longitude: payload.longitude
+	},
+	id: payload.er_id,
+	device: {
+		id: payload.device_id
+	},
+	reportedSymptoms: payload.reported_symptoms,
+	status: payload.status default ""
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>
