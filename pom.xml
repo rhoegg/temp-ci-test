@@ -31,6 +31,27 @@
 							<artifactId>postgresql</artifactId>
 						</sharedLibrary>
 					</sharedLibraries>
+					<cloudhub2Deployment>
+						<muleVersion>${app.runtime}</muleVersion>
+						<businessGroupId>ec0abd5f-2b31-431b-9dc7-f20318c69809</businessGroupId>
+						<environment>Sandbox</environment>
+						<applicationName>emergency-response-sapi-dev</applicationName>
+						<provider>MC</provider>
+						<target>Cloudhub-US-East-2</target>
+						<vCores>0.2</vCores>
+						<javaVersion>17</javaVersion>
+						<connectedAppClientId>${connectedApp.clientId}</connectedAppClientId>
+						<connectedAppClientSecret>${connectedApp.clientSecret}</connectedAppClientSecret>
+						<connectedAppGrantType>client_credentials</connectedAppGrantType>
+						<properties>
+							<mule.env>dev</mule.env>
+							<anypoint.platform.client_id>${anypoint.platform.client_id}</anypoint.platform.client_id>
+						</properties>
+						<secureProperties>
+							<anypoint.platform.client_secret>${anypoint.platform.client_secret}</anypoint.platform.client_secret>
+							<db.password>${db.password}</db.password>
+						</secureProperties>
+					</cloudhub2Deployment>
 					<classifier>mule-application</classifier>
 				</configuration>
 			</plugin>
