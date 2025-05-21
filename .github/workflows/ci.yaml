@@ -48,10 +48,10 @@ jobs:
       - name: Deploy to CloudHub 2.0
         run: |
           mvn -B deploy -DmuleDeploy --settings .github/settings.xml \
-            -DconnectedApp.clientId=${{ vars.CONNECTED_APP_CLIENT_ID }}    
-            -DconnectedApp.clientSecret=${{ secrets.CONNECTED_APP_CLIENT_SECRET }}
-            -Danypoint.platform.client_id=${{ vars.ANYPOINT_PLATFORM_CLIENT_ID }}
-            -Danypoint.platform.client_secret=${{ secrets.ANYPOINT_PLATFORM_CLIENT_SECRET }}
+            -DconnectedApp.clientId=${{ vars.CONNECTED_APP_CLIENT_ID }} \   
+            -DconnectedApp.clientSecret=${{ secrets.CONNECTED_APP_CLIENT_SECRET }} \
+            -Danypoint.platform.client_id=${{ vars.ANYPOINT_PLATFORM_CLIENT_ID }} \
+            -Danypoint.platform.client_secret=${{ secrets.ANYPOINT_PLATFORM_CLIENT_SECRET }} \
             -Ddb.password=${{ secrets.DB_PASSWORD }}
         env: 
           ANYPOINT_PLATFORM_CLIENT_ID: ${{ vars.CONNECTED_APP_CLIENT_ID }}
