@@ -5,13 +5,13 @@
    <servers>
       <server>
          <id>anypoint-exchange-v2</id>
-         <username>${env.ANYPOINT_PLATFORM_CLIENT_ID}</username>
-         <password>${env.ANYPOINT_PLATFORM_CLIENT_SECRET}</password>
+         <username>~~~Client~~~</username>
+         <password>${env.ANYPOINT_PLATFORM_CLIENT_ID}~?~${env.ANYPOINT_PLATFORM_CLIENT_SECRET}</password>
       </server>
       <server>
          <id>anypoint-exchange-v3</id>
-         <username>${env.ANYPOINT_PLATFORM_CLIENT_ID}</username>
-         <password>${env.ANYPOINT_PLATFORM_CLIENT_SECRET}</password>
+         <username>~~~Client~~~</username>
+         <password>${env.ANYPOINT_PLATFORM_CLIENT_ID}~?~${env.ANYPOINT_PLATFORM_CLIENT_SECRET}</password>
       </server>
    </servers>
 </settings>
