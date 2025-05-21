@@ -24,3 +24,10 @@ jobs:
         env: 
           ANYPOINT_PLATFORM_CLIENT_ID: ${{ secrets.CONNECTED_APP_CLIENT_ID }}
           ANYPOINT_PLATFORM_CLIENT_SECRET: ${{ secrets.CONNECTED_APP_CLIENT_SECRET }}
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: mule-application
+          path: target/*.jar
+          if-no-files-found: error
+          retention-days: 5
